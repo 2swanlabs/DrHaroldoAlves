@@ -1,702 +1,226 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr. Haroldo Alves — Odontologia Estética</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Demo Access Token Expired</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "warm-gold": "#C5A059",
+          "surface": "#f9f9f7",
+          "primary": "#000000",
+          "on-surface": "#1a1c1b",
+          "on-surface-variant": "#474741",
+          "outline-variant": "#c8c7be",
+          "outline": "#787770",
+          "border-subtle": "#E5E5E3",
+          "secondary": "#775a19",
+        },
+        fontFamily: {
+          display: ["Playfair Display", "serif"],
+          body: ["Inter", "sans-serif"],
+        },
+        animation: { "fade-up": "fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards" },
+        keyframes: {
+          fadeUp: {
+            "0%":   { opacity: "0", transform: "translateY(20px)" },
+            "100%": { opacity: "1", transform: "translateY(0)" },
+          }
+        }
+      },
+    },
+  }
+</script>
 <style>
-  :root {
-    --navy: #0a1628;
-    --blue: #1a4080;
-    --sky: #2e7fc1;
-    --accent: #4fb3e8;
-    --cream: #f8f5f0;
-    --warm: #e8e0d5;
-    --text: #1a1a2e;
-    --muted: #6b7280;
-    --white: #ffffff;
-  }
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; font-size: 16px; }
-
-  /* ── NAV ── */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 60px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s ease; }
-  nav.scrolled { background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); padding: 16px 60px; box-shadow: 0 1px 30px rgba(0,0,0,0.08); }
-
-  .nav-logo { display: flex; flex-direction: column; line-height: 1; text-decoration: none; }
-  .nav-logo img.logo-img { height: 72px; width: auto; object-fit: contain; filter: brightness(0) invert(1); transition: filter 0.4s; display: block; }
-  nav.scrolled .nav-logo img.logo-img { filter: none; }
-  .nav-logo .logo-fallback { display: none; flex-direction: column; }
-  .nav-logo .name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--white); letter-spacing: 0.5px; transition: color 0.4s; }
-  nav.scrolled .nav-logo .name { color: var(--navy); }
-  .nav-logo .sub { font-size: 12px; font-weight: 300; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-top: 5px; transition: color 0.4s; }
-  nav.scrolled .nav-logo .sub { color: var(--muted); }
-
-  .nav-links { display: flex; gap: 40px; list-style: none; }
-  .nav-links a { font-size: 13px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.3s; }
-  nav.scrolled .nav-links a { color: var(--text); }
-  .nav-links a:hover { color: var(--accent); }
-  nav.scrolled .nav-links a:hover { color: var(--sky); }
-
-  .nav-cta { font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; padding: 13px 30px; border: 1px solid rgba(255,255,255,0.6); color: var(--white); text-decoration: none; transition: all 0.3s; }
-  nav.scrolled .nav-cta { border-color: var(--sky); color: var(--sky); }
-  .nav-cta:hover { background: var(--white); color: var(--navy); border-color: var(--white); }
-  nav.scrolled .nav-cta:hover { background: var(--sky); color: var(--white); border-color: var(--sky); }
-
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-  .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
-  nav.scrolled .hamburger span { background: var(--navy); }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--navy); z-index: 99; padding: 100px 40px 50px; flex-direction: column; gap: 0; transform: translateY(-100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); overflow-y: auto; }
-  .mobile-menu.open { transform: translateY(0); }
-  .mobile-menu a { font-size: 26px; font-family: 'Cormorant Garamond', serif; font-weight: 300; color: var(--white); text-decoration: none; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.08); transition: color 0.3s; }
-  .mobile-menu a:hover { color: var(--accent); }
-  .mobile-menu .mobile-cta { margin-top: 32px; background: var(--sky); color: var(--white); text-align: center; font-family: 'DM Sans', sans-serif; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; padding: 18px; border-bottom: none; }
-
-  /* ── HERO ── */
-  #hero { height: 100vh; min-height: 700px; position: relative; display: flex; align-items: center; overflow: hidden; }
-  .hero-bg { position: absolute; inset: 0; background-image: url('Doctor.png'); background-size: cover; background-position: center top; transform: scale(1.1); will-change: transform; }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(10,22,40,0.82) 0%, rgba(10,22,40,0.55) 55%, rgba(10,22,40,0.2) 100%); }
-  .hero-content { position: relative; z-index: 2; padding: 0 60px; max-width: 720px; }
-  .hero-eyebrow { font-size: 12px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.3s forwards; }
-  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 6vw, 88px); font-weight: 300; line-height: 1.05; color: var(--white); margin-bottom: 28px; opacity: 0; transform: translateY(30px); animation: fadeUp 0.9s 0.5s forwards; }
-  .hero-title em { font-style: italic; font-weight: 300; color: var(--accent); }
-  .hero-desc { font-size: 17px; font-weight: 300; line-height: 1.85; color: rgba(255,255,255,0.78); max-width: 500px; margin-bottom: 48px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.9s 0.7s forwards; }
-  .hero-actions { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; opacity: 0; transform: translateY(20px); animation: fadeUp 0.9s 0.9s forwards; }
-  .btn-primary { padding: 17px 42px; background: var(--sky); color: var(--white); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; display: inline-block; text-align: center; }
-  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(79,179,232,0.4); }
-  .btn-ghost { padding: 17px 42px; border: 1px solid rgba(255,255,255,0.4); color: var(--white); text-decoration: none; font-size: 13px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; display: inline-block; text-align: center; }
-  .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
-
-  /* ── ABOUT ── */
-  #about { padding: 120px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; background: var(--white); }
-  .about-img-wrap { position: relative; }
-  .about-img-wrap::before { content: ''; position: absolute; top: -20px; left: -20px; right: 60px; bottom: 60px; border: 1px solid var(--warm); z-index: 0; }
-  .about-img-wrap img { width: 100%; height: 600px; object-fit: cover; object-position: top center; position: relative; z-index: 1; display: block; }
-  .about-badge { position: absolute; bottom: -20px; right: -20px; background: var(--sky); color: var(--white); padding: 28px 32px; z-index: 2; text-align: center; }
-  .about-badge .badge-num { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; line-height: 1; display: block; }
-  .about-badge .badge-txt { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.9; display: block; margin-top: 4px; }
-
-  .section-eyebrow { font-size: 12px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: var(--sky); margin-bottom: 16px; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 56px); font-weight: 300; line-height: 1.15; color: var(--navy); margin-bottom: 28px; }
-  .section-title em { font-style: italic; color: var(--sky); }
-  .body-text { font-size: 16px; font-weight: 300; line-height: 1.9; color: var(--muted); margin-bottom: 20px; }
-  .cro-badge { display: inline-block; margin-top: 12px; padding: 11px 22px; background: var(--cream); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--navy); font-weight: 500; }
-
-  /* ── SERVICES ── */
-  #services { padding: 120px 60px; background: var(--cream); }
-  .section-header { text-align: center; max-width: 620px; margin: 0 auto 80px; }
-  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-  .service-card { background: var(--white); padding: 52px 44px; position: relative; overflow: hidden; transition: all 0.4s ease; cursor: default; }
-  .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--sky); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
-  .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
-  .service-card:hover::after { transform: scaleX(1); }
-  .service-num { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 300; color: var(--warm); line-height: 1; margin-bottom: 24px; transition: color 0.4s; }
-  .service-card:hover .service-num { color: rgba(47,127,193,0.15); }
-  .service-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 500; color: var(--navy); margin-bottom: 16px; line-height: 1.2; }
-  .service-desc { font-size: 15px; font-weight: 300; line-height: 1.85; color: var(--muted); }
-
-  /* ── GALLERY ── */
-  #gallery { padding: 120px 60px; background: var(--white); }
-  .gallery-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 60px; }
-  .gallery-intro-cta { display: flex; flex-direction: column; align-items: flex-start; }
-
-  /* Desktop: masonry 3 colunas com alturas variadas */
-  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 340px 240px; gap: 12px; }
-  .gallery-item { overflow: hidden; position: relative; }
-  .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
-  .gallery-item:nth-child(2) { grid-column: 2; grid-row: 1; }
-  .gallery-item:nth-child(3) { grid-column: 3; grid-row: 1; }
-  .gallery-item:nth-child(4) { grid-column: 2; grid-row: 2; }
-  .gallery-item:nth-child(5) { grid-column: 3; grid-row: 2; }
-  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; display: block; }
-  .gallery-item:hover img { transform: scale(1.06); }
-
-  /* Mobile slider — oculto no desktop */
-  .gallery-slider { display: none; }
-
-  /* Dots */
-  .slider-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
-  .slider-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.25); border: none; cursor: pointer; transition: background 0.3s, transform 0.3s; padding: 0; }
-  .slider-dot.active { background: var(--accent); transform: scale(1.3); }
-  .gallery-slider .slider-dot { background: var(--warm); }
-  .gallery-slider .slider-dot.active { background: var(--sky); }
-
-  /* Botões Anterior/Próximo — circular, sem número, APENAS mobile */
-  .gallery-nav { display: none; justify-content: center; gap: 20px; margin-top: 20px; }
-  .gallery-nav-btn {
-    width: 48px; height: 48px; border-radius: 50%;
-    border: 1.5px solid var(--sky); background: transparent;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: all 0.3s; color: var(--sky);
-  }
-  .gallery-nav-btn:hover { background: var(--sky); color: var(--white); }
-  .gallery-nav-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
-
-  /* ── PARALLAX CTA ── */
-  .parallax-section { height: 500px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .parallax-bg { position: absolute; inset: -100px 0; background-image: url('g5.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
-  .parallax-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,22,40,0.88), rgba(26,64,128,0.75)); }
-  .parallax-content { position: relative; z-index: 2; text-align: center; padding: 0 40px; }
-  .parallax-content .section-eyebrow { color: var(--accent); }
-  .parallax-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 68px); font-weight: 300; color: var(--white); line-height: 1.1; margin-bottom: 32px; }
-  .parallax-title em { font-style: italic; color: var(--accent); }
-
-  /* ── AVALIAÇÕES ── */
-  #reviews { padding: 120px 60px; background: var(--navy); }
-  #reviews .section-eyebrow { color: var(--accent); }
-  #reviews .section-title { color: var(--white); }
-  .reviews-header { margin-bottom: 64px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-  .reviews-header-left { max-width: 560px; }
-  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .review-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 40px 36px; transition: all 0.4s; }
-  .review-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(79,179,232,0.3); transform: translateY(-4px); }
-  .review-stars { font-size: 15px; color: #f5c518; letter-spacing: 3px; margin-bottom: 20px; }
-  .review-text { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; font-style: italic; line-height: 1.85; color: rgba(255,255,255,0.78); margin-bottom: 28px; }
-  .review-author { font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
-  .reviews-slider { display: none; }
-
-  /* ── SHARED SLIDER ── */
-  .slider-wrap { position: relative; overflow: hidden; }
-  .slider-track { display: flex; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); }
-  .slider-track .slide { flex: 0 0 100%; width: 100%; }
-
-  /* ── CONTACT PARALLAX ── */
-  .contact-parallax { height: 420px; position: relative; display: flex; align-items: center; overflow: hidden; }
-  .contact-parallax-bg { position: absolute; inset: -80px 0; background-image: url('Doctor.png'); background-size: cover; background-position: center 20%; background-attachment: fixed; }
-  .contact-parallax-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.6) 60%, rgba(10,22,40,0.3) 100%); }
-  .contact-parallax-content { position: relative; z-index: 2; padding: 0 60px; }
-  .contact-parallax-content .section-eyebrow { color: var(--accent); }
-
-  /* ── CONTATO ── */
-  #contact { padding: 100px 60px; background: var(--cream); display: grid; grid-template-columns: 1fr 1fr; gap: 100px; }
-  .contact-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 400; color: var(--navy); margin-bottom: 40px; }
-  .contact-detail { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--warm); }
-  .contact-detail:last-child { border-bottom: none; }
-  .contact-detail-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--sky); margin-bottom: 8px; }
-  .contact-detail-value { font-size: 16px; font-weight: 300; color: var(--navy); line-height: 1.65; }
-  .contact-form { display: flex; flex-direction: column; gap: 20px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-group { display: flex; flex-direction: column; gap: 8px; }
-  .form-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 500; }
-  .form-input, .form-select, .form-textarea { padding: 15px 18px; border: 1px solid var(--warm); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: var(--text); outline: none; transition: border-color 0.3s; -webkit-appearance: none; }
-  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--sky); }
-  .form-textarea { resize: vertical; min-height: 130px; }
-  .form-note { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6; }
-
-  /* ── MAPA ── */
-  #map-section { height: 440px; position: relative; overflow: hidden; }
-  #map-section iframe { width: 100%; height: 100%; border: none; filter: saturate(0.7) contrast(1.1); }
-
-  /* ── RODAPÉ ── */
-  footer { background: var(--navy); padding: 80px 60px 40px; }
-  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 40px; }
-  .footer-brand .brand-name { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; color: var(--white); margin-bottom: 6px; }
-  .footer-brand .brand-sub { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-  .footer-brand p { font-size: 15px; font-weight: 300; line-height: 1.85; color: rgba(255,255,255,0.48); max-width: 280px; }
-  .footer-col h4 { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 24px; font-weight: 400; }
-  .footer-col ul { list-style: none; }
-  .footer-col ul li { margin-bottom: 13px; }
-  .footer-col ul li a { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.3s; }
-  .footer-col ul li a:hover { color: var(--accent); }
-  .footer-hours p { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.9; }
-  .footer-hours .day { color: rgba(255,255,255,0.35); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 14px; display: block; }
-  .footer-bottom { display: flex; align-items: center; justify-content: space-between; }
-  .footer-bottom p { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.3); letter-spacing: 0.5px; }
-  .footer-cro { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); padding: 9px 18px; border: 1px solid rgba(79,179,232,0.3); }
-  .footer-social { display: flex; gap: 20px; }
-  .footer-social a { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.3s; }
-  .footer-social a:hover { color: var(--accent); }
-  .footer-credit { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.25); letter-spacing: 0.5px; }
-  .footer-credit a { color: rgba(255,255,255,0.45); text-decoration: none; font-weight: 400; transition: color 0.3s; }
-  .footer-credit a:hover { color: var(--accent); }
-
-  /* ── BOTÕES FLUTUANTES ── */
-  .float-stack { position: fixed; bottom: 36px; right: 36px; z-index: 200; display: flex; flex-direction: column; gap: 14px; align-items: center; }
-  .float-btn { width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; }
-  .float-btn svg { width: 26px; height: 26px; fill: white; }
-  .float-wa { background: #25d366; box-shadow: 0 8px 30px rgba(37,211,102,0.45); }
-  .float-wa:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(37,211,102,0.55); }
-  .float-ig { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); box-shadow: 0 8px 30px rgba(214,36,159,0.4); }
-  .float-ig:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(214,36,159,0.5); }
-
-  /* ── ANIMAÇÕES ── */
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-  .divider { width: 60px; height: 1px; background: var(--sky); margin: 24px 0; }
-  .divider-center { margin: 24px auto; }
-
-  /* ══ RESPONSIVO ══ */
-  @media (max-width: 1024px) {
-    nav { padding: 22px 30px; } nav.scrolled { padding: 16px 30px; }
-    .nav-links { gap: 24px; }
-    #about, #contact { padding: 80px 30px; gap: 50px; }
-    #services, #gallery, #reviews { padding: 80px 30px; }
-    footer { padding: 60px 30px 30px; }
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-    .contact-parallax-content { padding: 0 30px; }
+  html, body {
+    height: 100%;
+    overflow: hidden;
   }
 
-  @media (max-width: 768px) {
-    .nav-links, .nav-cta { display: none; }
-    .hamburger { display: flex; }
-    .mobile-menu { display: flex; }
-    nav { padding: 16px 24px; } nav.scrolled { padding: 12px 24px; }
-    .nav-logo img.logo-img { height: 52px; }
+  /* ── Background: hidden scrollable container ── */
+  #bg-scroll {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  #bg-scroll::-webkit-scrollbar { display: none; }
 
-    #hero { height: 90vh; }
-    .hero-content { padding: 0 24px; }
-    .hero-actions { flex-direction: column; align-items: center; width: 100%; }
-    .hero-actions .btn-primary, .hero-actions .btn-ghost { width: 100%; max-width: 320px; text-align: center; }
+  /* The actual background image div — height set by JS after image loads */
+  #bg-image {
+    width: 100%;
+    background-image: url('background.png');
+    background-size: 100% auto;   /* full width, natural height */
+    background-position: top center;
+    background-repeat: no-repeat;
+    filter: blur(4.5px) brightness(0.85);
+  }
 
-    #about { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
-    .about-img-wrap img { height: 400px; }
-    #services { padding: 60px 24px; }
-    .services-grid { grid-template-columns: 1fr; }
+  /* ── Card wrapper: locked to viewport ── */
+  #card-wrapper {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  #card-wrapper > * { pointer-events: auto; }
 
-    #gallery { padding: 60px 24px; }
-    .gallery-intro { grid-template-columns: 1fr; gap: 24px; }
-    .gallery-intro-cta { align-items: center; }
-    .gallery-grid { display: none; }
-    /* Mobile: mostra slider e botões circular prev/next abaixo dos dots */
-    .gallery-slider { display: block; }
-    .gallery-slider .slide img { width: 100%; height: 280px; object-fit: cover; display: block; }
-    .gallery-nav { display: flex; }
+  /* ── Glass card ── */
+  .glass-card {
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+      0 4px 6px -1px rgba(0,0,0,0.07),
+      0 10px 15px -3px rgba(0,0,0,0.05),
+      0 20px 25px -5px rgba(0,0,0,0.03);
+  }
 
-    #reviews { padding: 60px 24px; }
-    .reviews-grid { display: none; }
-    .reviews-slider { display: block; }
 
-    #contact { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
-    .form-row { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr; gap: 30px; }
-    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-    .float-stack { bottom: 24px; right: 20px; }
-    .float-btn { width: 52px; height: 52px; }
+
+  /* Fade image into curve */
+  .hero-image-fit {
+    mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
   }
 </style>
 </head>
-<body>
+<body class="font-body antialiased text-on-surface">
 
-<!-- MENU MOBILE -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#about" onclick="closeMobileMenu()">Sobre</a>
-  <a href="#services" onclick="closeMobileMenu()">Serviços</a>
-  <a href="#gallery" onclick="closeMobileMenu()">Galeria</a>
-  <a href="#reviews" onclick="closeMobileMenu()">Avaliações</a>
-  <a href="#contact" onclick="closeMobileMenu()">Contato</a>
-  <a href="https://wa.me/5592981645199" class="mobile-cta" target="_blank">Agendar Consulta</a>
-</div>
-
-<!-- NAVEGAÇÃO -->
-<nav id="navbar">
-  <a href="#" class="nav-logo" id="navLogo">
-    <img src="logo.png" alt="Dr. Haroldo Alves" class="logo-img" id="logoImg"
-      onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
-    <span class="logo-fallback" id="logoFallback">
-      <span class="name">Dr. Haroldo Alves</span>
-      <span class="sub">Odontologia Estética</span>
-    </span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#about">Sobre</a></li>
-    <li><a href="#services">Serviços</a></li>
-    <li><a href="#gallery">Galeria</a></li>
-    <li><a href="#reviews">Avaliações</a></li>
-    <li><a href="#contact">Contato</a></li>
-  </ul>
-  <a href="https://wa.me/5592981645199" class="nav-cta" target="_blank">Agendar</a>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Especialista em Cirurgia Bucomaxilofacial — Manaus, AM</p>
-    <h1 class="hero-title">O Seu Sorriso,<br><em>Transformado</em></h1>
-    <p class="hero-desc">Especialista em cirurgia oral e bucomaxilofacial, implantes dentários, próteses e odontologia estética. Atendimento de confiança para adultos e crianças.</p>
-    <div class="hero-actions">
-      <a href="https://wa.me/5592981645199" class="btn-primary" target="_blank">Agendar Consulta</a>
-      <a href="#services" class="btn-ghost">Nossos Serviços</a>
-    </div>
-  </div>
-</section>
-
-<!-- SOBRE -->
-<section id="about">
-  <div class="about-img-wrap reveal">
-    <img src="Doctor.png" alt="Dr. Haroldo Alves realizando procedimento odontológico">
-    <div class="about-badge"><span class="badge-num">CRO</span><span class="badge-txt">AM 09520</span></div>
-  </div>
-  <div class="about-text reveal reveal-delay-2">
-    <p class="section-eyebrow">Sobre o Doutor</p>
-    <h2 class="section-title">Precisão, Cuidado &<br><em>Excelência</em></h2>
-    <div class="divider"></div>
-    <p class="body-text">O Dr. Haroldo Alves é especialista em Cirurgia e Traumatologia Bucomaxilofacial, com vasta experiência em implantes dentários, próteses e odontologia estética. Registrado no Conselho Regional de Odontologia (CRO-AM 09520), ele oferece um atendimento personalizado e cuidadoso a cada paciente.</p>
-    <p class="body-text">Reconhecido pela sua tranquilidade no atendimento e precisão cirúrgica, o Dr. Haroldo proporciona cuidados excepcionais para adultos e crianças — incluindo pacientes com necessidades especiais — garantindo que cada consulta seja confortável e cada resultado seja extraordinário.</p>
-    <div class="cro-badge">CRO-AM 09520 · Especialista Registrado</div>
-  </div>
-</section>
-
-<!-- SERVIÇOS -->
-<section id="services">
-  <div class="section-header reveal">
-    <p class="section-eyebrow">O Que Oferecemos</p>
-    <h2 class="section-title">Nossos <em>Serviços</em></h2>
-    <div class="divider divider-center"></div>
-    <p class="body-text">Atendimento odontológico completo, realizado com expertise e atenção personalizada.</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <div class="service-num">01</div>
-      <h3 class="service-name">Cirurgia e Traumatologia Bucomaxilofacial</h3>
-      <p class="service-desc">Procedimentos cirúrgicos especializados, incluindo extração de dentes do siso, cirurgia de mandíbula e tratamento de lesões decorrentes de traumas e acidentes.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-1">
-      <div class="service-num">02</div>
-      <h3 class="service-name">Implantes Dentários</h3>
-      <p class="service-desc">Reposição permanente e de aspecto natural de dentes perdidos, por meio da instalação precisa de implantes de titânio para reabilitação oral completa.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
-      <div class="service-num">03</div>
-      <h3 class="service-name">Próteses</h3>
-      <p class="service-desc">Reabilitação oral abrangente com foco em estética, fonética e mastigação, devolvendo a forma e a função ao seu sorriso.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-1">
-      <div class="service-num">04</div>
-      <h3 class="service-name">Clareamento Dental</h3>
-      <p class="service-desc">Tratamentos de clareamento em consultório, seguros e eficazes, com resultados expressivos. Até 3 sessões combinadas com profilaxia profissional.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
-      <div class="service-num">05</div>
-      <h3 class="service-name">Limpeza Dental</h3>
-      <p class="service-desc">Profilaxia profissional que remove manchas superficiais e tártaro, restaurando a cor natural dos dentes e promovendo a saúde bucal a longo prazo.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-3">
-      <div class="service-num">06</div>
-      <h3 class="service-name">Atendimento a PNE</h3>
-      <p class="service-desc">Atendimento odontológico dedicado e humanizado para pacientes com necessidades especiais (PNE) — adultos e crianças — em um ambiente acolhedor e tranquilo.</p>
-    </div>
-  </div>
-</section>
-
-<!-- GALERIA -->
-<section id="gallery">
-  <div class="gallery-intro">
-    <div class="reveal">
-      <p class="section-eyebrow">Resultados dos Pacientes</p>
-      <h2 class="section-title">Antes &<br><em>Depois</em></h2>
-      <div class="divider"></div>
-    </div>
-    <div class="reveal reveal-delay-2 gallery-intro-cta">
-      <p class="body-text">Resultados reais de pacientes reais. Nosso trabalho fala por si — das transformações com clareamento à reabilitação completa do sorriso.</p>
-      <a href="https://wa.me/5592981645199" class="btn-primary" target="_blank" style="display:inline-block; margin-top:24px; text-align:center;">Agendar uma Avaliação</a>
-    </div>
-  </div>
-
-  <!-- Grade Desktop -->
-  <div class="gallery-grid" id="galleryGrid">
-    <div class="gallery-item"><img src="g1.jpg" alt="Resultado do tratamento"></div>
-    <div class="gallery-item"><img src="g2.webp" alt="Resultado do tratamento"></div>
-    <div class="gallery-item"><img src="g3.webp" alt="Resultado do tratamento"></div>
-    <div class="gallery-item"><img src="g4.webp" alt="Resultado do tratamento"></div>
-    <div class="gallery-item"><img src="g5.jpg" alt="Resultado do tratamento"></div>
-  </div>
-
-  <!-- Slider Mobile -->
-  <div class="gallery-slider slider-wrap" id="gallerySlider">
-    <div class="slider-track" id="galleryTrack">
-      <div class="slide"><img src="g1.jpg" alt="Resultado 1"></div>
-      <div class="slide"><img src="g2.webp" alt="Resultado 2"></div>
-      <div class="slide"><img src="g3.webp" alt="Resultado 3"></div>
-      <div class="slide"><img src="g4.webp" alt="Resultado 4"></div>
-      <div class="slide"><img src="g5.jpg" alt="Resultado 5"></div>
-    </div>
-    <!-- Dots acima dos botões -->
-    <div class="slider-dots" id="galleryDots"></div>
-    <!-- Botões circular anterior/próximo abaixo dos dots — mobile only -->
-    <div class="gallery-nav" id="galleryNav">
-      <button class="gallery-nav-btn" id="galleryPrev" aria-label="Anterior">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button class="gallery-nav-btn" id="galleryNext" aria-label="Próximo">
-        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- PARALLAX CTA -->
-<div class="parallax-section">
-  <div class="parallax-bg"></div>
-  <div class="parallax-overlay"></div>
-  <div class="parallax-content">
-    <p class="section-eyebrow">Pronto para Transformar o Seu Sorriso?</p>
-    <h2 class="parallax-title">Agende Sua<br><em>Avaliação Gratuita</em></h2>
-    <a href="https://wa.me/5592981645199" class="btn-primary" target="_blank">Falar pelo WhatsApp</a>
-  </div>
-</div>
-
-<!-- AVALIAÇÕES -->
-<section id="reviews">
-  <div class="reviews-header">
-    <div class="reviews-header-left reveal">
-      <p class="section-eyebrow">Avaliações dos Pacientes</p>
-      <h2 class="section-title">O Que Nossos<br><em>Pacientes Dizem</em></h2>
-      <div class="divider"></div>
-      <p class="body-text" style="color:rgba(255,255,255,0.48); max-width:420px;">Cada sorriso conta uma história. Veja o que nossos pacientes dizem sobre a experiência com o Dr. Haroldo Alves.</p>
-    </div>
-  </div>
-
-  <!-- Grade Desktop -->
-  <div class="reviews-grid">
-    <div class="review-card reveal"><div class="review-stars">★★★★★</div><p class="review-text">"Fiz a extração dos meus dentes do siso com o Dr. Haroldo e foi muito rápido; me recuperei completamente em uma semana. Ele ainda me deu o número de telefone dele caso eu tivesse dúvidas após a cirurgia. Além de ser um excelente profissional, é muito atencioso."</p><div class="review-author">Thiago Farias</div></div>
-    <div class="review-card reveal reveal-delay-1"><div class="review-stars">★★★★★</div><p class="review-text">"Incrível, tenho muito medo de dentista, mas ele me atendeu muito bem e me deixou tranquila. Fez um ótimo trabalho e muito rápido. Recomendo muito."</p><div class="review-author">Helloisa Pereira</div></div>
-    <div class="review-card reveal reveal-delay-2"><div class="review-stars">★★★★★</div><p class="review-text">"A clínica tem um excelente profissionalismo e compromisso sério com os pacientes. Por isso comecei a frequentar exclusivamente esta clínica. Agradeço muito ao Dr. Haroldo Alves pelo excelente atendimento!"</p><div class="review-author">Max Arlan Garcia Oliveira</div></div>
-    <div class="review-card reveal reveal-delay-1"><div class="review-stars">★★★★★</div><p class="review-text">"Atendimento excelente, muito atencioso e cuidadoso. Recomendo muito! Melhor doutor!"</p><div class="review-author">KL Lágrima</div></div>
-    <div class="review-card reveal reveal-delay-2"><div class="review-stars">★★★★★</div><p class="review-text">"Profissional excelente com atendimento maravilhoso. Levei minha filha para fazer uma extração e foi muito tranquilo. Recomendo e voltarei mais vezes."</p><div class="review-author">Priscila Wildak</div></div>
-    <div class="review-card reveal reveal-delay-3"><div class="review-stars">★★★★★</div><p class="review-text">"O Dr. Haroldo Alves me atendeu de forma excelente, explicando todos os detalhes do procedimento. Recomendo muito."</p><div class="review-author">Thiago Pinto</div></div>
-  </div>
-
-  <!-- Slider Mobile -->
-  <div class="reviews-slider slider-wrap" id="reviewsSlider">
-    <div class="slider-track" id="reviewsTrack">
-      <div class="slide"><div class="review-card" style="margin:0;"><div class="review-stars">★★★★★</div><p class="review-text">"Fiz a extração dos meus dentes do siso com o Dr. Haroldo e foi muito rápido; me recuperei completamente em uma semana. Muito atencioso após a cirurgia."</p><div class="review-author">Thiago Farias</div></div></div>
-      <div class="slide"><div class="review-card" style="margin:0;"><div class="review-stars">★★★★★</div><p class="review-text">"Incrível, tenho muito medo de dentista, mas ele me atendeu muito bem e me deixou tranquila. Fez um ótimo trabalho e muito rápido. Recomendo muito."</p><div class="review-author">Helloisa Pereira</div></div></div>
-      <div class="slide"><div class="review-card" style="margin:0;"><div class="review-stars">★★★★★</div><p class="review-text">"A clínica tem excelente profissionalismo e compromisso com os pacientes. Por isso comecei a frequentar exclusivamente esta clínica. Muito obrigado, Dr. Haroldo!"</p><div class="review-author">Max Arlan Garcia Oliveira</div></div></div>
-      <div class="slide"><div class="review-card" style="margin:0;"><div class="review-stars">★★★★★</div><p class="review-text">"Atendimento excelente, muito atencioso e cuidadoso. Recomendo muito! Melhor doutor!"</p><div class="review-author">KL Lágrima</div></div></div>
-      <div class="slide"><div class="review-card" style="margin:0;"><div class="review-stars">★★★★★</div><p class="review-text">"Profissional excelente com atendimento maravilhoso. Levei minha filha para uma extração e foi muito tranquilo. Recomendo e voltarei mais vezes."</p><div class="review-author">Priscila Wildak</div></div></div>
-      <div class="slide"><div class="review-card" style="margin:0;"><div class="review-stars">★★★★★</div><p class="review-text">"O Dr. Haroldo Alves me atendeu de forma excelente, explicando todos os detalhes do procedimento. Recomendo muito."</p><div class="review-author">Thiago Pinto</div></div></div>
-    </div>
-    <div class="slider-dots" id="reviewsDots"></div>
-  </div>
-</section>
-
-<!-- PARALLAX CONTATO -->
-<div class="contact-parallax">
-  <div class="contact-parallax-bg"></div>
-  <div class="contact-parallax-overlay"></div>
-  <div class="contact-parallax-content">
-    <p class="section-eyebrow">Entre em Contato</p>
-    <h2 class="section-title" style="color:var(--white);">Visite-nos em<br><em style="color:var(--accent)">Manaus</em></h2>
-  </div>
-</div>
-
-<!-- CONTATO -->
-<section id="contact">
-  <div class="contact-info reveal">
-    <h3>Informações de Contato</h3>
-    <div class="contact-detail"><div class="contact-detail-label">Endereço</div><div class="contact-detail-value">Av. Castelo Branco, 2145 — Sala 04<br>Cachoeirinha, Manaus — AM<br>CEP 69065-011</div></div>
-    <div class="contact-detail"><div class="contact-detail-label">Telefone / WhatsApp</div><div class="contact-detail-value"><a href="tel:+5592981645199" style="color:var(--navy);text-decoration:none;">(92) 98164-5199</a></div></div>
-    <div class="contact-detail"><div class="contact-detail-label">Instagram</div><div class="contact-detail-value"><a href="https://www.instagram.com/dr.haroldoalves" target="_blank" style="color:var(--sky);text-decoration:none;">@dr.haroldoalves</a></div></div>
-    <div class="contact-detail"><div class="contact-detail-label">Registro CRO</div><div class="contact-detail-value">CRO-AM 09520</div></div>
-  </div>
-
-  <div class="reveal reveal-delay-2">
-    <p class="section-eyebrow">Envie uma Mensagem</p>
-    <h3 style="font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:400; color:var(--navy); margin-bottom:10px;">Agende Sua<br>Consulta</h3>
-    <p class="form-note" style="margin-bottom:28px;">Preencha seus dados e clique em Enviar — sua mensagem será aberta diretamente no WhatsApp.</p>
-    <div class="contact-form" id="contactForm">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Nome Completo</label>
-          <input type="text" class="form-input" id="formName" placeholder="Seu nome">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Telefone</label>
-          <input type="tel" class="form-input" id="formPhone" placeholder="(92) 9xxxx-xxxx">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Serviço de Interesse</label>
-        <select class="form-select" id="formService">
-          <option value="">Selecione um serviço</option>
-          <option>Cirurgia e Traumatologia Bucomaxilofacial</option>
-          <option>Implantes Dentários</option>
-          <option>Próteses</option>
-          <option>Clareamento Dental</option>
-          <option>Limpeza Dental</option>
-          <option>Atendimento a PNE</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Mensagem</label>
-        <textarea class="form-textarea" id="formMessage" placeholder="Conte-nos sobre suas necessidades ou dúvidas..."></textarea>
-      </div>
-      <button type="button" onclick="sendToWhatsApp()" class="btn-primary" style="border:none; cursor:pointer; width:100%; margin-top:8px;">
-        Enviar pelo WhatsApp
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- MAPA -->
-<div id="map-section">
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.774!2d-60.0072893!3d-3.1174759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c054472fd7c39%3A0x9277476ccdd326c0!2sDr.Haroldo%20Alves!5e0!3m2!1spt-BR!2sbr!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
-</div>
-
-<!-- RODAPÉ -->
-<footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="brand-name">Dr. Haroldo Alves</div>
-      <div class="brand-sub">Odontologia Estética</div>
-      <p>Especialista em cirurgia e traumatologia bucomaxilofacial, implantes dentários e odontologia estética. Atendimento para adultos e crianças em Manaus, Amazonas.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Serviços</h4>
-      <ul>
-        <li><a href="#services">Cirurgia Bucomaxilofacial</a></li>
-        <li><a href="#services">Implantes Dentários</a></li>
-        <li><a href="#services">Próteses</a></li>
-        <li><a href="#services">Clareamento Dental</a></li>
-        <li><a href="#services">Limpeza Dental</a></li>
-        <li><a href="#services">Atendimento a PNE</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Navegação</h4>
-      <ul>
-        <li><a href="#about">Sobre</a></li>
-        <li><a href="#services">Serviços</a></li>
-        <li><a href="#gallery">Galeria</a></li>
-        <li><a href="#reviews">Avaliações</a></li>
-        <li><a href="#contact">Contato</a></li>
-        <li><a href="https://www.instagram.com/dr.haroldoalves" target="_blank">Instagram</a></li>
-      </ul>
-    </div>
-    <div class="footer-col footer-hours">
-      <h4>Localização e Contato</h4>
-      <p>Av. Castelo Branco, 2145<br>Sala 04, Cachoeirinha<br>Manaus — AM, 69065-011</p>
-      <span class="day">Telefone</span>
-      <p><a href="tel:+5592981645199" style="color:rgba(255,255,255,0.65);text-decoration:none;">(92) 98164-5199</a></p>
-      <span class="day">Registro CRO</span>
-      <p>CRO-AM 09520</p>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 Dr. Haroldo Alves — Odontologia Estética. Todos os direitos reservados.</p>
-    <div class="footer-cro">CRO-AM 09520</div>
-    <div class="footer-social">
-      <a href="https://www.instagram.com/dr.haroldoalves" target="_blank">Instagram</a>
-      <a href="https://wa.me/5592981645199" target="_blank">WhatsApp</a>
-      <a href="https://www.google.com/maps/place/Dr.Haroldo+Alves" target="_blank">Google Maps</a>
-    </div>
-  </div>
-  <div class="footer-credit">
-    Design &amp; Desenvolvido por <a href="https://2swan.in" target="_blank" rel="noopener">2 Swan</a>
-  </div>
-</footer>
-
-<!-- BOTÕES FLUTUANTES -->
-<div class="float-stack">
-  <a href="https://www.instagram.com/dr.haroldoalves" class="float-btn float-ig" target="_blank" title="Instagram">
-    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-  </a>
-  <a href="https://wa.me/5592981645199" class="float-btn float-wa" target="_blank" title="WhatsApp">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-  </a>
+<!-- Blurred scrollable background -->
+<div id="bg-scroll">
+  <div id="bg-image"></div>
 </div>
 
 <script>
-  // Navbar scroll
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 60); });
+  // Set bg-image div height = natural pixel height of background.png so it's fully scrollable
+  (function() {
+    var img = new Image();
+    img.onload = function() {
+      var vw = window.innerWidth;
+      // natural rendered height when width = 100vw
+      var renderedH = (img.naturalHeight / img.naturalWidth) * vw;
+      var el = document.getElementById('bg-image');
+      // add a little extra so the last scroll position isn't cut short
+      el.style.height = Math.max(renderedH, window.innerHeight * 1.5) + 'px';
+    };
+    img.src = 'background.png';
+  })();
 
-  // Hero parallax
-  const heroBg = document.getElementById('heroBg');
-  window.addEventListener('scroll', () => { if (heroBg) heroBg.style.transform = `scale(1.1) translateY(${window.scrollY * 0.25}px)`; });
+  // Forward wheel + touch scroll to bg layer
+  document.addEventListener('wheel', function(e) {
+    document.getElementById('bg-scroll').scrollTop += e.deltaY;
+  }, { passive: true });
 
-  // Scroll reveal
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    });
-  });
-
-  // Hamburger menu
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-  });
-  function closeMobileMenu() {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  // WhatsApp form
-  function sendToWhatsApp() {
-    const name    = document.getElementById('formName').value.trim();
-    const phone   = document.getElementById('formPhone').value.trim();
-    const service = document.getElementById('formService').value;
-    const message = document.getElementById('formMessage').value.trim();
-    if (!name) { alert('Por favor, informe o seu nome.'); return; }
-    let text = `Olá, Dr. Haroldo Alves! Gostaria de agendar uma consulta.\n\n`;
-    text += `*Nome:* ${name}\n`;
-    if (phone)   text += `*Telefone:* ${phone}\n`;
-    if (service) text += `*Serviço:* ${service}\n`;
-    if (message) text += `*Mensagem:* ${message}\n`;
-    window.open(`https://wa.me/5592981645199?text=${encodeURIComponent(text)}`, '_blank');
-  }
-
-  // Slider factory — dots above, external prev/next buttons below
-  function initSlider(trackId, dotsId, autoplayMs, prevBtnId, nextBtnId) {
-    const track = document.getElementById(trackId);
-    const dotsWrap = document.getElementById(dotsId);
-    if (!track || !dotsWrap) return;
-    const slides = track.querySelectorAll('.slide');
-    const count = slides.length;
-    let current = 0, timer;
-    slides.forEach((_, i) => {
-      const d = document.createElement('button');
-      d.className = 'slider-dot' + (i === 0 ? ' active' : '');
-      d.addEventListener('click', () => go(i));
-      dotsWrap.appendChild(d);
-    });
-    function go(idx) {
-      current = (idx + count) % count;
-      track.style.transform = `translateX(-${current * 100}%)`;
-      dotsWrap.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('active', i === current));
-      resetTimer();
-    }
-    function resetTimer() { clearInterval(timer); timer = setInterval(() => go(current + 1), autoplayMs); }
-    let startX = 0;
-    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend', e => { const diff = startX - e.changedTouches[0].clientX; if (Math.abs(diff) > 40) go(current + (diff > 0 ? 1 : -1)); });
-    if (prevBtnId) document.getElementById(prevBtnId)?.addEventListener('click', () => go(current - 1));
-    if (nextBtnId) document.getElementById(nextBtnId)?.addEventListener('click', () => go(current + 1));
-    resetTimer();
-  }
-
-  initSlider('galleryTrack', 'galleryDots', 3500, 'galleryPrev', 'galleryNext');
-  initSlider('reviewsTrack', 'reviewsDots', 4500);
+  var _ty = 0;
+  document.addEventListener('touchstart', function(e) { _ty = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchmove', function(e) {
+    var bg = document.getElementById('bg-scroll');
+    bg.scrollTop += _ty - e.touches[0].clientY;
+    _ty = e.touches[0].clientY;
+  }, { passive: true });
 </script>
-</body>
-</html>
+
+<!-- Card -->
+<div id="card-wrapper">
+  <main class="w-full max-w-[28rem] mx-4 flex flex-col glass-card border border-border-subtle rounded-3xl overflow-hidden animate-fade-up"
+        style="height: min(92vh, 820px);">
+
+    <!-- Hero Image -->
+    <section class="w-full relative flex-shrink-0" style="height: 260px;" data-purpose="hero-image-container">
+      <img alt="Header" class="w-full h-full hero-image-fit"
+           src="header.png"
+           style="object-fit: cover; object-position: top;"/>
+
+    </section>
+
+    <!-- Content -->
+    <section class="px-6 text-center pt-5 z-20 flex flex-col items-center w-full pb-4 flex-1 justify-center"
+             data-purpose="expired-message">
+
+      <h1 class="font-display text-[26px] leading-[1.15] tracking-tight text-primary mb-1 whitespace-nowrap">
+        Demo Access Token Expired
+      </h1>
+      <h2 class="font-display text-[15px] font-normal leading-[1.5] text-warm-gold mb-4 italic opacity-90">
+        This Website Is Not Currently Live
+      </h2>
+
+      <!-- Badge -->
+      <div class="bg-primary/5 text-primary/70 text-[10px] font-semibold px-3 py-1 rounded-full mb-4 tracking-[0.18em] uppercase border border-primary/10">
+        Demonstration Preview · Not For Public Use
+      </div>
+
+      <!-- Divider -->
+      <div class="flex items-center w-28 mb-4 opacity-40">
+        <div class="h-[1px] bg-outline-variant flex-grow"></div>
+        <div class="mx-3 text-warm-gold">
+          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="h-[1px] bg-outline-variant flex-grow"></div>
+      </div>
+
+      <p class="text-on-surface-variant text-[13px] leading-relaxed max-w-xs mb-5 font-light">
+        If you're looking for the live version and believe it was taken down by mistake, feel free to reach out.
+      </p>
+
+      <!-- WhatsApp -->
+      <a class="w-full group cursor-pointer" href="https://wa.me/919988067867" target="_blank" rel="noopener noreferrer">
+        <div class="w-full bg-white border border-border-subtle rounded-2xl py-4 px-5 flex items-center justify-between transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 group-active:scale-[0.98]">
+          <div class="flex items-center gap-4">
+            <div class="bg-warm-gold/10 p-3 rounded-xl transition-colors group-hover:bg-warm-gold">
+              <svg class="h-5 w-5 text-warm-gold group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </div>
+            <div class="text-left">
+              <p class="text-warm-gold text-[10px] font-bold tracking-[0.2em] uppercase mb-0.5">Chat on WhatsApp</p>
+              <p class="text-primary font-semibold text-lg tracking-tight">+91 99880 67867</p>
+            </div>
+          </div>
+          <div class="text-outline/40 transition-transform duration-300 group-hover:translate-x-1">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <p class="text-on-surface-variant text-xs mt-4 italic">Thank you for your understanding.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w-full px-6 pb-4 pt-1 flex-shrink-0" data-purpose="page-footer">
+      <div class="flex items-center justify-center w-full mb-2">
+        <div class="h-[1px] bg-outline-variant flex-grow opacity-30"></div>
+        <div class="mx-4 text-warm-gold opacity-40 hover:opacity-100 transition-opacity">
+          <svg fill="none" height="22" viewBox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="0.5"/>
+            <path d="M8 15C8 15 9 17 12 17C15 17 16 15 16 13.5C16 12 14.5 11.5 12 11C9.5 10.5 8 10 8 8.5C8 7 9 5 12 5C15 5 16 7 16 7" stroke="currentColor" stroke-linecap="round" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="h-[1px] bg-outline-variant flex-grow opacity-30"></div>
+      </div>
+      <p class="text-center text-[10px] text-on-surface-variant/60 tracking-[0.1em] font-medium uppercase">
+        For more designs, visit <a class="text-warm-gold hover:text-secondary transition-colors" href="https://2swan.in">2Swan.in</a> — Portfolio
+      </p>
+    </footer>
+
+  </main>
+</div>
+
+</body></html>
